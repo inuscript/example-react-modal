@@ -5,13 +5,29 @@ const ItemA = () => {
   return <div>hoge</div>
 }
 
-const Modal = ({onClose}) => {
+const MyClose = (props) => {
+  const style = {
+    position: 'absolute',
+    top: -10,
+    right: -60,
+    cursor: 'pointer',
+    background: "white",
+    borderRadius: 10,
+    padding: 10
+  }
+  return <div style={style} {...props}>閉じる ×</div>
+}
+
+const MyModal = ({onClose, children}) => {
   return (
-    <ModalContainer onClose={onClose}>
-      <ModalDialog onClose={onClose}>
-        <ItemA/>
-      </ModalDialog>
-    </ModalContainer>
+    <div>
+      <ModalContainer onClick={onClose}>
+        <ModalDialog>
+          <MyClose onClick={onClose} />
+          {children}
+        </ModalDialog>
+      </ModalContainer>
+    </div>
   );
 }
 
@@ -26,8 +42,15 @@ class App extends Component{
     if(!this.state.showModal){
       return <noscript />
     }
-    return <Modal onClose={this.handleClose}/>
+    const style = {zIndex: 10000}
+    return (
+      <div style={style}>
+        <MyModal onClose={this.handleClose}>
+          <ItemA/>
+        </MyModal>
+      </div>
+    )
   }
 }
 
-export default App;
+export default App
