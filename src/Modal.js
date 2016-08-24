@@ -30,10 +30,23 @@ const Modal = ({onClose, children}) => {
   );
 }
 
-class AnimationContainer extends Component{
+class HideAnimationContainer extends Component{
+  state = {
+    finished: false,
+    isAnimated: false
+  }
+  handleFinish = () => {
+    this.state({finished: true, isAnimated: false}, () => {
+      this.props.onFinish()
+    })
+  }
   render(){
-    const { className, onFinish, children } = this.props
-    return <div className={className} onAnimationEnd={onFinish} >
+    const { finish, onFinish, children } = this.props
+    const className = css(
+      this.state.isAnimated && style.containerShow,
+      this.state.isAnimated && style.containerHide
+    )
+    return <div className={className} onAnimationEnd={this.handleFinish} >
       {children}
     </div>
   }
@@ -59,7 +72,6 @@ class MyModal extends Component{
     }
     const cx = css(
       style.container,
-      this.state.animateHide && style.containerHide
     )
     return (
       <div className={cx} onAnimationEnd={this.handleAnimationEnd}>
