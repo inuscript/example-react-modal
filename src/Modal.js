@@ -30,6 +30,10 @@ const Modal = ({onClose, children}) => {
   );
 }
 
+class AnimationContainer extends Component{
+  
+}
+
 class MyModal extends Component{
   state = {
     showModal: true,
@@ -38,10 +42,11 @@ class MyModal extends Component{
   handleClose = () => {
     this.setState({animateHide: true})
   }
-  handleAnimated = () => {
-    if(this.state.animateHide){
-      this.setState({showModal: false})
+  handleAnimationEnd = () => {
+    if(!this.state.animateHide){
+      return
     }
+    this.setState({showModal: false})
   }
   render(){
     if(!this.state.showModal){
@@ -52,7 +57,7 @@ class MyModal extends Component{
       this.state.animateHide && style.containerHide
     )
     return (
-      <div className={cx} onAnimationEnd={this.handleAnimated}>
+      <div className={cx} onAnimationEnd={this.handleAnimationEnd}>
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>

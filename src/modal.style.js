@@ -13,6 +13,10 @@ const justifyParent = () => ({
   justifyContent: "center",
   alignItems: "center",
 })
+const justifyChild = () => ({
+  width: "auto",
+  position: 'absolute'
+})
 
 const fadeIn = (start=0, end=1) => ({
   animationName: {
@@ -26,6 +30,9 @@ export default {
   container: {
     ...fullScreen(),
     ...justifyParent(),
+    // ...fadeIn(0, 1),
+  },
+  containerShow: {
     ...fadeIn(0, 1),
   },
   containerHide: {
@@ -43,11 +50,10 @@ export default {
     color: "gray",
   },
   dialog: {
+    ...justifyChild(),
     boxSizing: 'border-box',
     backgroundColor: "#fff",
     padding: 20,
     borderRadius: 4,
-    width: "auto",
-    position: 'absolute'
   }
 }
