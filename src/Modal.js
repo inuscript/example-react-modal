@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, css } from 'aphrodite'
+import { StyleSheet, css } from 'aphrodite/no-important'
 import CSSTransitionGroup from　'react-addons-css-transition-group'
 
 const mixin = {
@@ -25,15 +25,20 @@ const mixin = {
 const style = StyleSheet.create({
   container: {
     ...mixin.wrapAll(),
+    ...mixin.fadeIn(0, 1),
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+
+  },
+  containerHide: {
+    ...mixin.fadeIn(1, 0),
   },
   background: {
     ...mixin.wrapAll(),
-    ...mixin.fadeIn(0, 0.8),
     opacity: 0.8,
     background: "#000",
+    zIndex: 10,
   },
   closeButton: {
     padding: 3,
@@ -42,7 +47,6 @@ const style = StyleSheet.create({
     color: "gray",
   },
   dialog: {
-    ...mixin.fadeIn(0, 1),
     zIndex: 100,
     boxSizing: 'border-box',
     backgroundColor: "#fff",
@@ -83,53 +87,46 @@ const Dialog = ({children}) => {
   </div>
 }
 
-const ItemA = () => {
-  return <div>hoge</div>
-}
-
-const Animation = ({children}) => {
-  const aStyle = {
-    enter: css(animationStyle.enter),
-    enterActive: css(animationStyle.enterActive),
-    leave: css(animationStyle.leave),
-    leaveActive: css(animationStyle.leaveActive),
-  }
-  console.log(aStyle)
-  return <CSSTransitionGroup transitionEnterTimeout={500} transitionLeaveTimeout={500} transitionName={aStyle}>
-    {children}
-  </CSSTransitionGroup>
-
-}
 
 const Modal = ({onClose, children}) => {
   return (
-    // <Animation>
-      <div className={css(style.container)} >
-        <ModalBackground onClick={onClose} />
-        <Dialog>
-          <DialogHeader onClose={onClose} />
-          {children}
-        </Dialog>
-      </div>
-    // </Animation>
+    <div>
+      <ModalBackground onClick={onClose} />
+      <Dialog>
+        <DialogHeader onClose={onClose} />
+        {children}
+      </Dialog>
+    </div>
   );
 }
 
 class MyModal extends Component{
   state = {
-    showModal: true
+    showModal: true,
+    animateHide: false,
   }
   handleClose = () => {
-    this.setState({showModal: false})
+    this.setState({animateHide: true})
+  }
+  handleAnimated = () => {
+    if(this.state.animateHide){
+      this.setState({showModal: false})
+    }
   }
   render(){
     if(!this.state.showModal){
       return <noscript />
     }
+    const cx = css(
+      style.container,
+      this.state.animateHide && style.containerHide
+    )
     return (
-      <Modal onClose={this.handleClose}>
-        {this.props.children}
-      </Modal>
+      <div className={cx} onAnimationEnd={this.handleAnimated}>
+        <Modal onClose={this.handleClose}>
+          {this.props.children}
+        </Modal>
+      </div>
     )
   }
 }
