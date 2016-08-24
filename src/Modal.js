@@ -31,7 +31,12 @@ const Modal = ({onClose, children}) => {
 }
 
 class AnimationContainer extends Component{
-  
+  render(){
+    const { className, onFinish, children } = this.props
+    return <div className={className} onAnimationEnd={onFinish} >
+      {children}
+    </div>
+  }
 }
 
 class MyModal extends Component{
