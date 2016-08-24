@@ -53,6 +53,7 @@ const style = StyleSheet.create({
     padding: 20,
     borderRadius: 4,
     width: "auto",
+    position: 'absolute'
   }
 })
 
