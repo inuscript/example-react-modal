@@ -1,75 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, css } from 'aphrodite/no-important'
-import CSSTransitionGroup from　'react-addons-css-transition-group'
+import { StyleSheet, css } from 'aphrodite'
+import modalStyle from './modal.style'
 
-const mixin = {
-  wrapAll(){
-    return {
-      height: "100%",
-      width: "100%",
-      position: 'absolute',
-      top: 0,
-      left: 0,
-    }
-  },
-  fadeIn(start=0, end=1) {
-    return {
-      animationName: {
-        from: { opacity: start }, to: { opacity: end }
-      },
-      animationDuration: "0.3s"
-    }
-  }
-}
-
-const style = StyleSheet.create({
-  container: {
-    ...mixin.wrapAll(),
-    ...mixin.fadeIn(0, 1),
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  containerHide: {
-    ...mixin.fadeIn(1, 0),
-  },
-  background: {
-    ...mixin.wrapAll(),
-    opacity: 0.8,
-    background: "#000",
-  },
-  closeButton: {
-    padding: 3,
-    textAlign: "right",
-    cursor: "pointer",
-    color: "gray",
-  },
-  dialog: {
-    boxSizing: 'border-box',
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 4,
-    width: "auto",
-    position: 'absolute'
-  }
-})
-
-const animationStyle = StyleSheet.create({
-  enter: {
-    opacity:0
-  },
-  enterActive:{
-    opacity: 1,
-    transition: "opacity 300ms ease-in"
-  },
-  leave:{
-    opacity: 1
-  },
-  leaveActive:{
-    opacity: 0,
-    transition: "opacity 300ms ease-in"
-  }
-})
+const style = StyleSheet.create(modalStyle)
 
 const DialogHeader = ({onClose}) => {
   return <div>
