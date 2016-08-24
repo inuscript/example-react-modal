@@ -11,7 +11,9 @@ const baseStyles = {
   },
   fadeIn(start=0, end=1) {
     return {
-      animationName: {from: { opacity: start}, to: {opacity: end}},
+      animationName: {
+        from: { opacity: start }, to: { opacity: end }
+      },
       animationDuration: "0.3s"
     }
   }
