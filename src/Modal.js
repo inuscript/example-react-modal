@@ -29,7 +29,6 @@ const style = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-
   },
   containerHide: {
     ...mixin.fadeIn(1, 0),
@@ -38,7 +37,6 @@ const style = StyleSheet.create({
     ...mixin.wrapAll(),
     opacity: 0.8,
     background: "#000",
-    zIndex: 10,
   },
   closeButton: {
     padding: 3,
@@ -47,7 +45,6 @@ const style = StyleSheet.create({
     color: "gray",
   },
   dialog: {
-    zIndex: 100,
     boxSizing: 'border-box',
     backgroundColor: "#fff",
     padding: 20,
@@ -87,7 +84,6 @@ const Dialog = ({children}) => {
     {children}
   </div>
 }
-
 
 const Modal = ({onClose, children}) => {
   return (
