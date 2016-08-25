@@ -49,24 +49,21 @@ const Modal = ({onClose, children}) => {
   )
 }
 
-const AnimateFade = ({show, handleAnimationEnd, children}) => {
-  let animate = cx(
-    show ? css(fade.enter) : css(fade.leave)
-  )
-
+const FadeAnimation = ({show, onFinish, children}) => {
+  let fadeClass = css( show ? fade.enter : fade.leave)
   return (
-    <div className={animate} onAnimationEnd={handleAnimationEnd}>
+    <div className={fadeClass} onAnimationEnd={onFinish}>
       {children}
     </div>
   )
 }
 
-class ModalContainer extends Component {
+class FadeModal extends Component {
   state = {
     show: true,
     finished: false
   }
-  handleAnimationEnd = () => { // animation終了時に
+  handleFinish = () => {
     if(this.state.show === false){
       this.setState({finished: true})
     }
@@ -79,13 +76,13 @@ class ModalContainer extends Component {
       return <noscript/>
     }
     return (
-      <AnimateFade show={this.state.show} onAnimationEnd={this.handleAnimationEnd}>
+      <FadeAnimation show={this.state.show} onFinish={this.handleFinish}>
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>
-      </AnimateFade>
+      </FadeAnimation>
     )
   }
 }
 
-export default ModalContainer
+export default FadeModal
