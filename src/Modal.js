@@ -32,28 +32,37 @@ const Modal = ({onClose, children}) => {
 
 class FadeAnimationContainer extends Component{
   state = {
-    finished: false,
+    show: false,
+    needAnimate: false,
     isAnimated: false
   }
+  handleStart = () => {
+    this.setState({isAnimated: true})
+  }
   handleFinish = () => {
-    this.state({finished: true, isAnimated: false}, () => {
-      if(this.props.onFinish){
-        this.props.onFinish()
-      }
+    this.setState({show: this.props.show, isAnimated: false}, () => {
     })
   }
-  render(){
-    const { finish, children, finishedItem } = this.props
-
-    if(!this.state.finished){
-      return finishedItem
+  componentWillMount(){
+    this.componentWillReceiveProps(this.props)
+  }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.show !== this.state.show){
+      this.setState({
+        needAnimate: true
+      })
     }
-
+  }
+  render(){
+    const { show, children, hiddenStateItem } = this.props
+    if( !this.state.show && !this.state.isAnimated && !this.state.needAnimate ){
+      return hiddenStateItem
+    }
+    const animateStyle = show ? style.containerShow : style.containerHide
     const className = css(
-      this.state.isAnimated && style.containerShow,
-      this.state.isAnimated && style.containerHide
+      this.state.needAnimate && animateStyle
     )
-    return <div className={className} onAnimationEnd={this.handleFinish} >
+    return <div className={className} onAnimationStart={this.handleStart} onAnimationEnd={this.handleFinish} >
       {children}
     </div>
   }
@@ -61,21 +70,15 @@ class FadeAnimationContainer extends Component{
 
 class MyModal extends Component{
   state = {
-    animateHide: false,
+    show: true,
   }
   handleClose = () => {
-    this.setState({animateHide: true})
-  }
-  handleAnimationEnd = () => {
-    if(!this.state.animateHide){
-      return
-    }
-    this.setState({showModal: false})
+    this.setState({show: false})
   }
   render(){
     const finishedItem = (<noscript />)
     return (
-      <FadeAnimationContainer finish={!this.props.showModal} finishedItem={finishedItem} >
+      <FadeAnimationContainer show={this.state.show} hiddenStateItem={finishedItem} >
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>
