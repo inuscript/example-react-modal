@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-import MyModal from './Modal'
-import Fade from './Fade'
-import FadeWithRtc from './FadeWithRtc'
-import FadeTrans from './FadeTrans'
-import FadeAnim from './FadeAnim'
-import ModalTrans from './ModalTrans'
+import FadeModal from './FadeModal'
 
 const ItemA = () => {
   return <div>hoge</div>
@@ -12,14 +7,11 @@ const ItemA = () => {
 
 class App extends Component {
   render () {
-    // return (<FadeTrans/>)
-    // return (<Fade/>)
     return (
       <div>
-        <FadeAnim />
-        <ModalTrans>
+        <FadeModal>
           <ItemA/>
-        </ModalTrans>
+        </FadeModal>
       </div>
     )
   }
