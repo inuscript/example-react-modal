@@ -1,27 +1,35 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 
 // style
-const fadeIn = (start=0, end=1) => ({
+const fadeIn = (start = 0, end = 1) => ({
   animationName: {
     from: { opacity: start },
     to: { opacity: end }
   },
-  animationDuration: "0.3s"
+  animationDuration: '0.3s'
 })
 
 const style = StyleSheet.create({
   animateShow: {
-    ...fadeIn(0, 1),
+    ...fadeIn(0, 1)
   },
   animateHide: {
-    ...fadeIn(1, 0),
+    ...fadeIn(1, 0)
+  },
+  button: {
+    padding: 10
+  },
+  item: {
+    background: 'rgb(184, 78, 109)',
+    padding: 10,
+    borderRadius: 4
   }
 })
 
 // component
 
-class FadeAnimationContainer extends Component{
+class FadeAnimationContainer extends Component {
   state = {
     show: false,
     needAnimate: false,
@@ -38,21 +46,21 @@ class FadeAnimationContainer extends Component{
     }, () => {
     })
   }
-  nextNeedAnimate(nextProps){
+  nextNeedAnimate (nextProps) {
     return (nextProps.show !== this.state.show && !this.state.isAnimated)
   }
-  componentWillMount(){ // initial
+  componentWillMount () { // initial
     this.setState({
       needAnimate: this.nextNeedAnimate(this.props)
     })
   }
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps (nextProps) {
     this.setState({
       needAnimate: this.nextNeedAnimate(nextProps)
     })
   }
-  render(){
-    if( !this.state.show && !this.state.isAnimated && !this.state.needAnimate ){
+  render () {
+    if (!this.state.show && !this.state.isAnimated && !this.state.needAnimate) {
       return (<noscript />)
     }
     const { show, children, hiddenStateItem } = this.props
@@ -66,24 +74,25 @@ class FadeAnimationContainer extends Component{
   }
 }
 
-class Fade extends Component{
+class Fade extends Component {
   state = {
-    show: true,
+    show: true
   }
   handleToggle = () => {
     this.setState({show: !this.state.show})
   }
-  render(){
+  render () {
     return (
       <div>
-        <button onClick={this.handleToggle}>toggle</button>
-        <span>{this.state.show ? "show": "hide"}</span>
+        <button className={css(style.button)} onClick={this.handleToggle}>
+          current: {this.state.show ? 'show' : 'hide'}
+        </button>
         <FadeAnimationContainer show={this.state.show} >
-          <div style={{"background":"red"}}>aaa</div>
+          <div className={css(style.item)}>aaa</div>
         </FadeAnimationContainer>
       </div>
     )
   }
 }
 
-export default Fade;
+export default Fade

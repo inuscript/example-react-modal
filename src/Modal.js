@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 import modalStyle from './modal.style'
 
@@ -27,10 +27,10 @@ const Modal = ({onClose, children}) => {
         {children}
       </Dialog>
     </div>
-  );
+  )
 }
 
-class FadeAnimationContainer extends Component{
+class FadeAnimationContainer extends Component {
   state = {
     show: false,
     needAnimate: false,
@@ -43,19 +43,19 @@ class FadeAnimationContainer extends Component{
     this.setState({show: this.props.show, isAnimated: false}, () => {
     })
   }
-  componentWillMount(){
+  componentWillMount () {
     this.componentWillReceiveProps(this.props)
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.show !== this.state.show){
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.show !== this.state.show) {
       this.setState({
         needAnimate: true
       })
     }
   }
-  render(){
+  render () {
     const { show, children, hiddenStateItem } = this.props
-    if( !this.state.show && !this.state.isAnimated && !this.state.needAnimate ){
+    if (!this.state.show && !this.state.isAnimated && !this.state.needAnimate) {
       return hiddenStateItem
     }
     const animateStyle = show ? style.containerShow : style.containerHide
@@ -68,14 +68,14 @@ class FadeAnimationContainer extends Component{
   }
 }
 
-class MyModal extends Component{
+class MyModal extends Component {
   state = {
-    show: true,
+    show: true
   }
   handleClose = () => {
     this.setState({show: false})
   }
-  render(){
+  render () {
     const finishedItem = (<noscript />)
     return (
       <FadeAnimationContainer show={this.state.show} hiddenStateItem={finishedItem} >
@@ -87,4 +87,4 @@ class MyModal extends Component{
   }
 }
 
-export default MyModal;
+export default MyModal
