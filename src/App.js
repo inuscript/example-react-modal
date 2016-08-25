@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MyModal from './Modal'
 import Fade from './Fade'
 import FadeWithRtc from './FadeWithRtc'
+import FadeTrans from './FadeTrans'
 
 const ItemA = () => {
   return <div>hoge</div>
@@ -9,7 +10,7 @@ const ItemA = () => {
 
 class App extends Component {
   render () {
-    return (<FadeWithRtc/>)
+    return (<FadeTrans/>)
     // return (<Fade/>)
     // return (
     //   <MyModal>

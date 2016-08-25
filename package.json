@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "aphrodite": "^0.5.0",
+    "classnames": "^2.2.5",
     "react": "^15.3.1",
     "react-addons-css-transition-group": "^15.3.1",
     "react-addons-transition-group": "^15.3.1",
