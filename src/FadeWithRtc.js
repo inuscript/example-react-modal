@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, css } from 'aphrodite'
+import { StyleSheet, css } from 'aphrodite/no-important'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 // import TransitionGroup from 'react-addons-transition-group'
 
@@ -32,22 +32,20 @@ const fadeTransition = StyleSheet.create({
     transition: "opacity 500ms ease-in"
   },
   appear: {
-    opacity: 0.01
+    opacity: 0
   },
   appearActive: {
     opacity: 1,
     transition: "opacity 500ms ease-in"
   },
   leave: {
-    opacity: 1
+    opacity: 1,
   },
   leaveActive: {
     opacity: 0.01,
-    transition: "opacity 500ms ease-in"
+    transition: "opacity 500ms ease-out"
   },
 })
-
-let cnt = 0
 
 class Fade extends Component {
   state = {
@@ -59,36 +57,35 @@ class Fade extends Component {
   render () {
     const transitionName = {
       enter: css(fadeTransition.enter),
-      enterActive: css(fadeTransition.enter, fadeTransition.enterActive),
+      enterActive: css(fadeTransition.enterActive),
+      // appear: css(fadeTransition.appear),
+      // appearActive: css(fadeTransition.appearActive),
       leave: css(fadeTransition.leave),
-      leaveActive: css(fadeTransition.leave, fadeTransition.leaveActive),
-      appear: css(fadeTransition.appear),
-      appearActive: css(fadeTransition.appear, fadeTransition.appearActive),
+      leaveActive: css(fadeTransition.leaveActive),
     }
     // console.log(transitionName)
     let str = (this.state.show ? 'show' : 'hide')
-    cnt++
     return (
       <div>
         <button className={css(style.button)} onClick={this.handleToggle}>
           current: {str}
         </button>
-        <div key="z">
           <ReactCSSTransitionGroup
+            // transitionAppear={true}
+            transitionLeave={true}
             transitionName={transitionName}
             // transitionName={"example"}
             transitionEnterTimeout={500000}
             transitionLeaveTimeout={500000}
             transitionAppearTimeout={500000}
           >
-          <div key={`${str}_${cnt}` }>{str}</div>
+            <div key={str}>{str}</div>
             {
               // this.state.show ? "show" : "hide"
                 // ? (<div key="show" className={css(style.item)}>aaa</div>)
                 // : (<div key="hide" >none</div>)
             }
           </ReactCSSTransitionGroup>
-        </div>
       </div>
     )
   }
