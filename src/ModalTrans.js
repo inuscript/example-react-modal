@@ -8,7 +8,8 @@ const fadeIn = (start = 0, end = 1) => ({
     from: { opacity: start },
     to: { opacity: end }
   },
-  animationDuration: '0.3s'
+  animationDuration: '0.3s',
+  animationFillMode: 'both'
 })
 
 const fade = StyleSheet.create({
@@ -48,7 +49,19 @@ const Modal = ({onClose, children}) => {
   )
 }
 
-class MyModal extends Component {
+const AnimateFade = ({show, handleAnimationEnd, children}) => {
+  let animate = cx(
+    show ? css(fade.enter) : css(fade.leave)
+  )
+
+  return (
+    <div className={animate} onAnimationEnd={handleAnimationEnd}>
+      {children}
+    </div>
+  )
+}
+
+class ModalContainer extends Component {
   state = {
     show: true,
     finished: false
@@ -65,17 +78,14 @@ class MyModal extends Component {
     if(this.state.finished){
       return <noscript/>
     }
-    let animate = cx(
-      this.state.show ? css(fade.enter) : css(fade.leave)
-    )
     return (
-      <div className={animate} onAnimationEnd={this.handleAnimationEnd}>
+      <AnimateFade show={this.state.show} onAnimationEnd={this.handleAnimationEnd}>
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>
-      </div>
+      </AnimateFade>
     )
   }
 }
 
-export default MyModal
+export default ModalContainer
