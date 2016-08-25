@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MyModal from './Modal'
+import Fade from './Fade'
 
 const ItemA = () => {
   return <div>hoge</div>
@@ -7,11 +8,12 @@ const ItemA = () => {
 
 class App extends Component{
   render(){
-    return (
-      <MyModal>
-        <ItemA/>
-      </MyModal>
-    )
+    return (<Fade/>)
+    // return (
+    //   <MyModal>
+    //     <ItemA/>
+    //   </MyModal>
+    // )
   }
 }
 
