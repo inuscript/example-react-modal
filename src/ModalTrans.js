@@ -3,15 +3,23 @@ import { StyleSheet, css } from 'aphrodite'
 import modalStyle from './modal.style'
 import cx from 'classnames'
 
+const fadeIn = (start = 0, end = 1) => ({
+  animationName: {
+    from: { opacity: start },
+    to: { opacity: end }
+  },
+  animationDuration: '0.3s'
+})
+
 const fade = StyleSheet.create({
   enter: {
-    opacity: 1
+    ...fadeIn(0, 1)
   },
   leave: {
-    opacity: 0
+    ...fadeIn(1, 0)
   },
   transition:{
-    transition: "opacity 500ms ease-in"
+    // transition: "opacity 500ms ease-in"
   },
 })
 
@@ -48,7 +56,7 @@ class MyModal extends Component {
     show: true,
     finished: false
   }
-  handleTransitionEnd = () => {
+  handleAnimationEnd = () => { // animation終了時に
     if(this.state.show === false){
       this.setState({finished: true})
     }
@@ -57,13 +65,15 @@ class MyModal extends Component {
     this.setState({show: false})
   }
   render () {
-    if(this.state.finished) return <noscript/>
+    if(this.state.finished){
+      return <noscript/>
+    }
     let animate = cx(
       css(fade.transition),
       this.state.show ? css(fade.enter) : css(fade.leave)
     )
     return (
-      <div className={animate} onTransitionEnd={this.handleTransitionEnd}>
+      <div className={animate} onAnimationEnd={this.handleAnimationEnd}>
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>
