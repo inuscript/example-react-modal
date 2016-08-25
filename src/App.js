@@ -3,6 +3,7 @@ import MyModal from './Modal'
 import Fade from './Fade'
 import FadeWithRtc from './FadeWithRtc'
 import FadeTrans from './FadeTrans'
+import FadeAnim from './FadeAnim'
 import ModalTrans from './ModalTrans'
 
 const ItemA = () => {
@@ -14,9 +15,12 @@ class App extends Component {
     // return (<FadeTrans/>)
     // return (<Fade/>)
     return (
-      <ModalTrans>
-        <ItemA/>
-      </ModalTrans>
+      <div>
+        <FadeAnim />
+        <ModalTrans>
+          <ItemA/>
+        </ModalTrans>
+      </div>
     )
   }
 }

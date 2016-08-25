@@ -18,9 +18,6 @@ const fade = StyleSheet.create({
   leave: {
     ...fadeIn(1, 0)
   },
-  transition:{
-    // transition: "opacity 500ms ease-in"
-  },
 })
 
 const style = StyleSheet.create(modalStyle)
@@ -69,7 +66,6 @@ class MyModal extends Component {
       return <noscript/>
     }
     let animate = cx(
-      css(fade.transition),
       this.state.show ? css(fade.enter) : css(fade.leave)
     )
     return (
