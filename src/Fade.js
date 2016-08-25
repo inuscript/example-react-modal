@@ -1,34 +1,25 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite'
-import modalStyle from './modal.style'
 
-const style = StyleSheet.create(modalStyle)
+// style
+const fadeIn = (start=0, end=1) => ({
+  animationName: {
+    from: { opacity: start },
+    to: { opacity: end }
+  },
+  animationDuration: "0.3s"
+})
 
-const DialogHeader = ({onClose}) => {
-  return <div>
-    <div className={css(style.closeButton)} onClick={onClose}>× 閉じる</div>
-  </div>
-}
-const ModalBackground = (props) => {
-  return <div {...props} className={css(style.background)} />
-}
-const Dialog = ({children}) => {
-  return <div className={css(style.dialog)}>
-    {children}
-  </div>
-}
+const style = StyleSheet.create({
+  animateShow: {
+    ...fadeIn(0, 1),
+  },
+  animateHide: {
+    ...fadeIn(1, 0),
+  }
+})
 
-const Modal = ({onClose, children}) => {
-  return (
-    <div className={css(style.container)}>
-      <ModalBackground onClick={onClose} />
-      <Dialog>
-        <DialogHeader onClose={onClose} />
-        {children}
-      </Dialog>
-    </div>
-  );
-}
+// component
 
 class FadeAnimationContainer extends Component{
   state = {
@@ -40,25 +31,32 @@ class FadeAnimationContainer extends Component{
     this.setState({isAnimated: true})
   }
   handleFinish = () => {
-    this.setState({show: this.props.show, isAnimated: false}, () => {
+    this.setState({
+      show: this.props.show,
+      isAnimated: false,
+      needAnimate: this.nextNeedAnimate(this.props)
+    }, () => {
     })
   }
-  componentWillMount(){
-    this.componentWillReceiveProps(this.props)
+  nextNeedAnimate(nextProps){
+    return (nextProps.show !== this.state.show && !this.state.isAnimated)
+  }
+  componentWillMount(){ // initial
+    this.setState({
+      needAnimate: this.nextNeedAnimate(this.props)
+    })
   }
   componentWillReceiveProps(nextProps){
-    if(nextProps.show !== this.state.show){
-      this.setState({
-        needAnimate: true
-      })
-    }
+    this.setState({
+      needAnimate: this.nextNeedAnimate(nextProps)
+    })
   }
   render(){
-    const { show, children, hiddenStateItem } = this.props
     if( !this.state.show && !this.state.isAnimated && !this.state.needAnimate ){
-      return hiddenStateItem
+      return (<noscript />)
     }
-    const animateStyle = show ? style.containerShow : style.containerHide
+    const { show, children, hiddenStateItem } = this.props
+    const animateStyle = (show ? style.animateShow : style.animateHide)
     const className = css(
       this.state.needAnimate && animateStyle
     )
@@ -76,12 +74,12 @@ class Fade extends Component{
     this.setState({show: !this.state.show})
   }
   render(){
-    const finishedItem = (<noscript />)
     return (
       <div>
         <button onClick={this.handleToggle}>toggle</button>
-        <FadeAnimationContainer show={this.state.show} hiddenStateItem={finishedItem} >
-          <div>aaa</div>
+        <span>{this.state.show ? "show": "hide"}</span>
+        <FadeAnimationContainer show={this.state.show} >
+          <div style={{"background":"red"}}>aaa</div>
         </FadeAnimationContainer>
       </div>
     )
