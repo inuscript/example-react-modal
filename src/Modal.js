@@ -20,7 +20,7 @@ const Dialog = ({children}) => {
 
 const Modal = ({onClose, children}) => {
   return (
-    <div>
+    <div className={css(style.container)}>
       <ModalBackground onClick={onClose} />
       <Dialog>
         <DialogHeader onClose={onClose} />
@@ -30,18 +30,25 @@ const Modal = ({onClose, children}) => {
   );
 }
 
-class HideAnimationContainer extends Component{
+class FadeAnimationContainer extends Component{
   state = {
     finished: false,
     isAnimated: false
   }
   handleFinish = () => {
     this.state({finished: true, isAnimated: false}, () => {
-      this.props.onFinish()
+      if(this.props.onFinish){
+        this.props.onFinish()
+      }
     })
   }
   render(){
-    const { finish, onFinish, children } = this.props
+    const { finish, children, finishedItem } = this.props
+
+    if(!this.state.finished){
+      return finishedItem
+    }
+
     const className = css(
       this.state.isAnimated && style.containerShow,
       this.state.isAnimated && style.containerHide
@@ -54,7 +61,6 @@ class HideAnimationContainer extends Component{
 
 class MyModal extends Component{
   state = {
-    showModal: true,
     animateHide: false,
   }
   handleClose = () => {
@@ -67,18 +73,13 @@ class MyModal extends Component{
     this.setState({showModal: false})
   }
   render(){
-    if(!this.state.showModal){
-      return <noscript />
-    }
-    const cx = css(
-      style.container,
-    )
+    const finishedItem = (<noscript />)
     return (
-      <div className={cx} onAnimationEnd={this.handleAnimationEnd}>
+      <FadeAnimationContainer finish={!this.props.showModal} finishedItem={finishedItem} >
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>
-      </div>
+      </FadeAnimationContainer>
     )
   }
 }
