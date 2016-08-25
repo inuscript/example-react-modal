@@ -14,6 +14,7 @@ const justifyParent = () => ({
   justifyContent: 'center',
   alignItems: 'center'
 })
+
 const justifyChild = () => ({
   width: 'auto',
   position: 'absolute'
@@ -29,7 +30,7 @@ const style = StyleSheet.create({
     opacity: 0.8,
     background: '#000'
   },
-  closeButton: {
+  closeLabel: {
     padding: 3,
     textAlign: 'right',
     cursor: 'pointer',
@@ -83,7 +84,7 @@ const fade = StyleSheet.create({
 
 const DialogHeader = ({onClose}) => {
   return <div>
-    <div className={css(style.closeButton)} onClick={onClose}>× 閉じる</div>
+    <div className={css(style.closeLabel)} onClick={onClose}>× 閉じる</div>
   </div>
 }
 const ModalBackground = (props) => {
