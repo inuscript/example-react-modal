@@ -30,12 +30,6 @@ export default {
     ...justifyParent()
     // ...fadeIn(0, 1),
   },
-  containerShow: {
-    ...fadeIn(0, 1)
-  },
-  containerHide: {
-    ...fadeIn(1, 0)
-  },
   background: {
     ...fullScreen(),
     opacity: 0.8,
