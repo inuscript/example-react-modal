@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 import modalStyle from './modal.style'
+import cx from 'classnames'
 
 const fade = StyleSheet.create({
   enter: {
@@ -44,18 +45,25 @@ const Modal = ({onClose, children}) => {
 
 class MyModal extends Component {
   state = {
-    show: true
+    show: true,
+    finished: false
+  }
+  handleTransitionEnd = () => {
+    if(this.state.show === false){
+      this.setState({finished: true})
+    }
   }
   handleClose = () => {
     this.setState({show: false})
   }
   render () {
-    let animate = [
+    if(this.state.finished) return <noscript/>
+    let animate = cx(
       css(fade.transition),
       this.state.show ? css(fade.enter) : css(fade.leave)
-    ]
+    )
     return (
-      <div className={animate}>
+      <div className={animate} onTransitionEnd={this.handleTransitionEnd}>
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>
