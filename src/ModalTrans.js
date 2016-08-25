@@ -50,7 +50,7 @@ const style = StyleSheet.create({
 
 const animationBase = {
   animationDuration: '0.5s',
-  animationFillMode: 'forwards'
+  animationFillMode: 'both'
 }
 const fadeAnimates = [
   { opacity: 0, display:"none", visibility: "hidden" },
@@ -60,18 +60,19 @@ const fadeAnimates = [
 
 const fadeIn = {
   "0%": fadeAnimates[0],
-  "1%": fadeAnimates[1],
+  "0.1%": fadeAnimates[1],
   "100%": fadeAnimates[2],
 }
 
 const fadeOut = {
   "0%": fadeAnimates[2],
-  "99%%": fadeAnimates[1],
+  "99.9%": fadeAnimates[1],
   "100%": fadeAnimates[0],
 }
 
 const fade = StyleSheet.create({
   enter: {
+    animationDelay: '0.2s',
     animationName: fadeIn,
     ...animationBase,
   },
