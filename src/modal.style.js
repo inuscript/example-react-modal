@@ -52,6 +52,9 @@ export default {
     boxSizing: 'border-box',
     backgroundColor: '#fff',
     padding: 20,
-    borderRadius: 4
+    borderRadius: 4,
+    // dialog size
+    minWidth: 600,
+    minHeight: 400,
   }
 }

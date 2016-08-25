@@ -1,23 +1,38 @@
 import React, { Component } from 'react'
-import { StyleSheet, css } from 'aphrodite'
+import { StyleSheet, css } from 'aphrodite/no-important'
 import modalStyle from './modal.style'
 import cx from 'classnames'
 
-const fadeIn = (start = 0, end = 1) => ({
-  animationName: {
-    from: { opacity: start },
-    to: { opacity: end }
-  },
-  animationDuration: '0.3s',
-  animationFillMode: 'both'
-})
+const animationBase = {
+  animationDuration: '0.7s',
+  animationFillMode: 'forwards'
+}
+const fadeAnimates = [
+  { opacity: 0, display:"none", visibility: "hidden" },
+  { opacity: 0.001, display:"block", visibility: "visible"  },
+  { opacity: 1,  display:"block", visibility: "visible" }
+]
+
+const fadeIn = {
+  "0%": fadeAnimates[0],
+  "1%": fadeAnimates[1],
+  "100%": fadeAnimates[2],
+}
+
+const fadeOut = {
+  "0%": fadeAnimates[2],
+  "99%%": fadeAnimates[1],
+  "100%": fadeAnimates[0],
+}
 
 const fade = StyleSheet.create({
   enter: {
-    ...fadeIn(0, 1)
+    animationName: fadeIn,
+    ...animationBase,
   },
   leave: {
-    ...fadeIn(1, 0)
+    animationName: fadeOut,
+    ...animationBase,
   },
 })
 
@@ -61,22 +76,14 @@ const FadeAnimation = ({show, onFinish, children}) => {
 class FadeModal extends Component {
   state = {
     show: true,
-    finished: false
   }
-  handleFinish = () => {
-    if(this.state.show === false){
-      this.setState({finished: true})
-    }
-  }
-  handleClose = () => {
-    this.setState({show: false})
-  }
+  handleClose = () => ( this.setState({show: false}) )
   render () {
     if(this.state.finished){
       return <noscript/>
     }
     return (
-      <FadeAnimation show={this.state.show} onFinish={this.handleFinish}>
+      <FadeAnimation show={this.state.show}>
         <Modal onClose={this.handleClose}>
           {this.props.children}
         </Modal>
