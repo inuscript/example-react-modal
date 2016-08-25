@@ -1,5 +1,3 @@
-import { StyleSheet } from 'aphrodite'
-
 const fullScreen = () => ({
   height: '100%',
   width: '100%',
