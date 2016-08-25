@@ -46,6 +46,9 @@ const fadeTransition = StyleSheet.create({
     transition: "opacity 500ms ease-in"
   },
 })
+
+let cnt = 0
+
 class Fade extends Component {
   state = {
     show: true
@@ -54,32 +57,38 @@ class Fade extends Component {
     this.setState({show: !this.state.show})
   }
   render () {
-    const transitionName={
+    const transitionName = {
       enter: css(fadeTransition.enter),
-      enterActive: css(fadeTransition.enterActive),
-      appear: css(fadeTransition.apper),
-      appearActive: css(fadeTransition.apperActive),
+      enterActive: css(fadeTransition.enter, fadeTransition.enterActive),
       leave: css(fadeTransition.leave),
-      leaveActive: css(fadeTransition.leaveActive),
+      leaveActive: css(fadeTransition.leave, fadeTransition.leaveActive),
+      appear: css(fadeTransition.appear),
+      appearActive: css(fadeTransition.appear, fadeTransition.appearActive),
     }
+    // console.log(transitionName)
+    let str = (this.state.show ? 'show' : 'hide')
+    cnt++
     return (
       <div>
         <button className={css(style.button)} onClick={this.handleToggle}>
-          current: {this.state.show ? 'show' : 'hide'}
+          current: {str}
         </button>
-        <ReactCSSTransitionGroup
-          transitionName={transitionName}
-          // transitionName={"example"}
-          transitionEnterTimeout={500000}
-          transitionLeaveTimeout={500000}
-          transitionAppearTimeout={500000}
-        >
-          {
-            this.state.show
-              ? (<div key="show" className={css(style.item)}>aaa</div>)
-              : (<div key="hide" >none</div>)
-          }
-        </ReactCSSTransitionGroup>
+        <div key="z">
+          <ReactCSSTransitionGroup
+            transitionName={transitionName}
+            // transitionName={"example"}
+            transitionEnterTimeout={500000}
+            transitionLeaveTimeout={500000}
+            transitionAppearTimeout={500000}
+          >
+          <div key={`${str}_${cnt}` }>{str}</div>
+            {
+              // this.state.show ? "show" : "hide"
+                // ? (<div key="show" className={css(style.item)}>aaa</div>)
+                // : (<div key="hide" >none</div>)
+            }
+          </ReactCSSTransitionGroup>
+        </div>
       </div>
     )
   }
