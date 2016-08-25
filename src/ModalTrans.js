@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important'
-import cx from 'classnames'
 
 const fullScreen = () => ({
   height: '100%',
@@ -43,8 +42,8 @@ const style = StyleSheet.create({
     padding: 20,
     borderRadius: 4,
     // dialog size
-    minWidth: 600,
-    minHeight: 400,
+    minWidth: "40%",
+    minHeight: "40%",
   }
 })
 
@@ -81,7 +80,6 @@ const fade = StyleSheet.create({
     ...animationBase,
   },
 })
-
 
 const DialogHeader = ({onClose}) => {
   return <div>
