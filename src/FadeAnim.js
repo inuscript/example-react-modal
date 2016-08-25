@@ -23,10 +23,10 @@ const fadeIn = (start = 0, end = 1) => ({
 
 const fade = StyleSheet.create({
   enter: {
-    ...fadeIn(0.01, 1)
+    ...fadeIn(0, 1)
   },
   leave: {
-    ...fadeIn(1, 0.01)
+    ...fadeIn(1, 0)
   },
 })
 
