@@ -18,7 +18,7 @@ const style = StyleSheet.create({
     ...fadeIn(1, 0)
   },
   button: {
-    padding: 10
+    padding: 10,
   },
   item: {
     background: 'rgb(184, 78, 109)',
