@@ -59,13 +59,13 @@ const fadeAnimates = [
 
 const fadeIn = {
   "0%": fadeAnimates[0],
-  "0.1%": fadeAnimates[1],
+  "1%": fadeAnimates[1],
   "100%": fadeAnimates[2],
 }
 
 const fadeOut = {
   "0%": fadeAnimates[2],
-  "99.9%": fadeAnimates[1],
+  "99%": fadeAnimates[1],
   "100%": fadeAnimates[0],
 }
 
