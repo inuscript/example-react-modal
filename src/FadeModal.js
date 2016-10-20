@@ -6,9 +6,11 @@ const DialogHeader = ({onClose}) => {
     <div className={css(style.closeLabel)} onClick={onClose}>× 閉じる</div>
   </div>
 }
-const ModalBackground = (props) => {
+
+const BackgroundBlur = (props) => {
   return <div {...props} className={css(style.background)} />
 }
+
 const Dialog = ({children}) => {
   return <div className={css(style.dialog)}>
     {children}
@@ -18,7 +20,7 @@ const Dialog = ({children}) => {
 const Modal = ({onClose, children}) => {
   return (
     <div className={css(style.container)}>
-      <ModalBackground onClick={onClose} />
+      <BackgroundBlur onClick={onClose} />
       <Dialog>
         <DialogHeader onClose={onClose} />
         {children}
